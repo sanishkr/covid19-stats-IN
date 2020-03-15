@@ -13,11 +13,32 @@ import theme from '../config/theme';
 import '../assets/css/index.css';
 
 class NextApp extends App {
+  cookies = parseCookies();
+  state = {
+    theme: this.cookies.theme || 'light',
+  };
   render() {
     const { Component, pageProps, store } = this.props;
-    const cookies = parseCookies();
-    console.log({ cookies });
+    // const cookies = parseCookies();
+    // const currentTheme = store.getState().statsReducer.theme || cookies.theme;
+    // store.getState().subscribe();
+    // console.log({
+    //   store: store.getState(),
+    //   // cookies,
+    //   currentTheme: this.state.theme,
+    // });
 
+    const changeTheme = th => {
+      store.dispatch({
+        type: 'SET_THEME',
+        payload: {
+          theme: th,
+        },
+      });
+      this.setState({
+        theme: th,
+      });
+    };
     return (
       <>
         <Head>
@@ -109,10 +130,8 @@ class NextApp extends App {
           />
         </Head>
         <Provider store={store}>
-          <ThemeProvider
-            theme={{ ...theme[cookies.theme ? cookies.theme : 'light'] }}
-          >
-            <Component {...pageProps} />
+          <ThemeProvider theme={{ ...theme[this.state.theme] }}>
+            <Component changeTheme={changeTheme} {...pageProps} />
           </ThemeProvider>
         </Provider>
       </>

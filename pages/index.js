@@ -26,54 +26,53 @@ const Wrapper = styled.div`
 const LastUpdated = styled.span`
   ${tw`self-start m-2 ml-4 font-mono text-xs antialiased text-purple-600`};
 `;
-class Page1 extends Component {
-  static async getInitialProps({ store, isServer, query, res }) {
+class Stats extends Component {
+  componentDidMount = async () => {
     const params = { id: 'IN' };
     await Promise.all([
-      store.dispatch(StatsActionsCreators.getCountryStats(params)),
-      store.dispatch(StatsActionsCreators.getStats()),
-      // store.dispatch(StatsActionsCreators.getCountries()),
+      this.props.getCountryStats(params),
+      this.props.getStats(),
+      // this.props.getStats()
     ]);
-    return { ...isServer };
-  }
-  componentDidMount = () => {
-    // this.props.getStats();
   };
   render() {
-    const { stats, countries, countryStats } = this.props;
-    console.log({ stats, countries, countryStats });
+    const { stats, countries, countryStats, currentTheme } = this.props;
+    // console.log({
+    //   stats,
+    //   countries,
+    //   countryStats,
+    //   currentTheme,
+    //   props: this.props,
+    // });
     return (
       <>
-        <Header />
-        <Container>
-          <div css={tw`flex flex-col w-full md:w-2/3`}>
-            <h2 css={tw`self-start ml-4 text-3xl text-red-500`}>
-              Global Cases
-            </h2>
-            <LastUpdated>
-              Last updated: {new Date(stats.lastUpdate).toUTCString()}
-            </LastUpdated>
-          </div>
-          <Wrapper>
-            {stats.lastUpdate ? (
-              <>
+        {stats.lastUpdate && countryStats.lastUpdate ? (
+          <>
+            <Header changeTheme={this.props.changeTheme} />
+            <Container>
+              <div css={tw`flex flex-col w-full md:w-2/3`}>
+                <h2 css={tw`self-start ml-4 text-3xl text-red-500`}>
+                  Global Cases
+                </h2>
+                <LastUpdated>
+                  Last updated: {new Date(stats.lastUpdate).toUTCString()}
+                </LastUpdated>
+              </div>
+              <Wrapper>
                 <StatsCard type="confirmed" count={stats.confirmed.value} />
                 <StatsCard type="recovered" count={stats.recovered.value} />
                 <StatsCard type="deaths" count={stats.deaths.value} />
-              </>
-            ) : null}
-          </Wrapper>
-          <div css={tw`flex flex-col w-full md:w-2/3`}>
-            <h2 css={tw`self-start ml-4 text-3xl text-red-500`}>
-              Cases In India
-            </h2>
-            <LastUpdated>
-              Last updated: {new Date(countryStats.lastUpdate).toUTCString()}
-            </LastUpdated>
-          </div>
-          <Wrapper>
-            {countryStats.lastUpdate ? (
-              <>
+              </Wrapper>
+              <div css={tw`flex flex-col w-full md:w-2/3`}>
+                <h2 css={tw`self-start ml-4 text-3xl text-red-500`}>
+                  Cases In India
+                </h2>
+                <LastUpdated>
+                  Last updated:{' '}
+                  {new Date(countryStats.lastUpdate).toUTCString()}
+                </LastUpdated>
+              </div>
+              <Wrapper>
                 <StatsCard
                   type="confirmed"
                   count={countryStats.confirmed.value}
@@ -83,10 +82,10 @@ class Page1 extends Component {
                   count={countryStats.recovered.value}
                 />
                 <StatsCard type="deaths" count={countryStats.deaths.value} />
-              </>
-            ) : null}
-          </Wrapper>
-        </Container>
+              </Wrapper>
+            </Container>
+          </>
+        ) : null}
       </>
     );
   }
@@ -96,15 +95,16 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getStats: StatsActionsCreators.getStats,
-      // getCountryStats: StatsActionsCreators.getCountryStats,
+      getCountryStats: StatsActionsCreators.getCountryStats,
     },
     dispatch,
   );
 
 const mapStateToProps = store => ({
   stats: selectors.getStats(store),
+  currentTheme: selectors.getTheme(store),
   countries: selectors.getCountries(store),
   countryStats: selectors.getCountryStats(store),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Page1);
+export default connect(mapStateToProps, mapDispatchToProps)(Stats);

@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import tw from 'tailwind.macro';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import {
+  actionCreators as StatsActionsCreators,
+  selectors,
+} from '../store/stats';
+
 import { useRouter } from 'next/router';
 import { setCookie, parseCookies } from 'nookies';
 
@@ -53,19 +62,31 @@ const ThemeImg = styled.img`
         `}
 `;
 
-export default props => {
+const ThemeImage = ({ currentTheme, changeTheme, setTheme, ...props }) => {
   const cookies = parseCookies();
-  // const router = useRouter();
-  const [them, setThem] = useState(cookies.theme || 'light');
+  const [them, setThem] = useState(currentTheme || cookies.theme || 'light');
   return (
     <ThemeImg
       onClick={() => {
-        setCookie(null, 'theme', them === 'light' ? 'dark' : 'light');
+        changeTheme(them === 'light' ? 'dark' : 'light');
         setThem(them === 'light' ? 'dark' : 'light');
-        // router.reload();
       }}
       theme={them}
       {...props}
     />
   );
 };
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      setTheme: StatsActionsCreators.setTheme,
+    },
+    dispatch,
+  );
+
+const mapStateToProps = store => ({
+  currentTheme: selectors.getTheme(store),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ThemeImage);

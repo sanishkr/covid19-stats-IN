@@ -1,6 +1,9 @@
 import typeToReducer from 'type-to-reducer';
+import { parseCookies, setCookie } from 'nookies';
+
 import { actions } from './actions';
 
+const cookies = new parseCookies();
 const initialState = {
   ui: {
     loading: false,
@@ -8,6 +11,7 @@ const initialState = {
   data: {},
   countries: {},
   countryData: {},
+  theme: cookies.theme,
   error: '',
 };
 
@@ -72,6 +76,19 @@ const statsReducer = typeToReducer(
           ui: { loading: false },
         });
       },
+    },
+    [actions.SET_THEME]: (state, action) => {
+      setCookie(null, 'theme', action.payload.theme);
+      return Object.assign({}, state, {
+        theme: action.payload.theme,
+        ui: { loading: false },
+      });
+    },
+    [actions.GET_THEME]: (state, action) => {
+      return Object.assign({}, state, {
+        theme: state.theme,
+        ui: { loading: false },
+      });
     },
   },
   initialState,

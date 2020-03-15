@@ -33,7 +33,7 @@ const HeaderWrapper = styled.div`
   color: ${props => props.theme.text};
 `;
 
-const Header = () => {
+const Header = ({ ...props }) => {
   return (
     <HeaderWrapper>
       <StyledNav>
@@ -57,7 +57,12 @@ const Header = () => {
             </a>
           </span>
         </div>
-        <ThemeImg title="Change theme" alt="Theme" src="./images/theme.png" />
+        <ThemeImg
+          changeTheme={props.changeTheme}
+          title="Change theme"
+          alt="Theme"
+          src="./images/theme.png"
+        />
       </StyledNav>
     </HeaderWrapper>
   );
