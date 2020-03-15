@@ -1,18 +1,18 @@
 {
-  "short_name": "next-tailwind-styled-component",
-  "name": "next-tailwind-styled-component",
-  "description": "NextJS boilerplate with Tailwind CSS and Styled-Components",
+  "short_name": "covid-19-stats",
+  "name": "Covid-19",
+  "description": "Corona Virus | Covid-19 | Latest Updates and Stats",
   "dir": "ltr",
   "lang": "en",
   "icons": [
     {
-      "src": "images/logo.png",
-      "sizes": "512x512 384x384 192x192 144x144 152x152 120x120 64x64 32x32 24x24 16x16",
+      "src": "images/logo-corona.png",
+      "sizes": "480x480",
       "type": "image/png"
     }
   ],
-  "start_url": "/page2",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#317EFB",
-  "background_color": "#317EFB"
+  "theme_color": "#f56464",
+  "background_color": "#f56464"
 }

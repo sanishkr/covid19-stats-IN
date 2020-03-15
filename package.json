@@ -22,7 +22,15 @@
       "git add"
     ]
   },
-  "keywords": [],
+  "keywords": [
+    "covid-19",
+    "corona",
+    "corona virus",
+    "reactjs",
+    "nextjs",
+    "pwa",
+    "ssr"
+  ],
   "author": "SNS",
   "license": "ISC",
   "dependencies": {
