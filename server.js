@@ -5,8 +5,6 @@ const compression = require('compression');
 const next = require('next');
 // const Cookies = require("universal-cookie");
 
-const routes = require('./routes');
-
 const port = process.env.PORT || 3000;
 const app = next({ dev: process.env.NODE_ENV !== 'production' });
 const handle = app.getRequestHandler();
@@ -35,13 +33,13 @@ app
       // res.setHeader('Clear-Site-Data', 'cookies, cache'); // adding kill-switch during new deployment, if you want
       app.serveStatic(req, res, filePath);
     });
-    const handler = routes.getRequestHandler(
-      app,
-      ({ req, res, route, query }) => {
-        app.render(req, res, route.page, query);
-      },
-    );
-    server.use(handler);
+    // const handler = routes.getRequestHandler(
+    //   app,
+    //   ({ req, res, route, query }) => {
+    //     app.render(req, res, route.page, query);
+    //   },
+    // );
+    // server.use(handler);
     server.get('*', (req, res) => handle(req, res));
     server.listen(port, err => {
       if (err) throw err;

@@ -17,7 +17,7 @@ import StatsCard from '../components/StatsCard';
 const Container = styled.div`
   background-color: ${props => props.theme.bg};
   color: ${props => props.theme.text};
-  ${tw`flex flex-col items-center justify-start w-full min-h-screen pt-4`};
+  ${tw`flex flex-col items-center justify-start w-full min-h-screen pt-4 font-sans`};
 `;
 const Wrapper = styled.div`
   ${tw`flex flex-row flex-wrap items-center justify-center w-full pb-4 border-b border-gray-300 border-dotted md:w-2/3`};

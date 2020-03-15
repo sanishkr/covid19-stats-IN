@@ -28,7 +28,7 @@ const CoronaImg = styled.img`
 `;
 
 const HeaderWrapper = styled.div`
-  ${tw`flex items-center justify-center`};
+  ${tw`flex items-center justify-center font-sans`};
   background-color: ${props => props.theme.bg};
   color: ${props => props.theme.text};
 `;

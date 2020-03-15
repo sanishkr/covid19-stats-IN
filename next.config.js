@@ -69,7 +69,7 @@ const nextConfig = {
           cacheName: 'cached-css',
           expiration: {
             maxEntries: 20,
-            maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
+            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
           },
         },
       },
@@ -80,12 +80,12 @@ const nextConfig = {
           cacheName: 'cached-images',
           expiration: {
             maxEntries: 100,
-            maxAgeSeconds: 15 * 24 * 60 * 60, // 15 days
+            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
           },
         },
       },
       {
-        urlPattern: /https:\/\/jsonplaceholder.typicode.com/,
+        urlPattern: /https:\/\/covid19.mathdro.id\/api/,
         handler: 'StaleWhileRevalidate',
         options: {
           cacheName: 'cached-apis',
