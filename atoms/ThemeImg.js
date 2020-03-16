@@ -10,9 +10,6 @@ import {
   selectors,
 } from '../store/stats';
 
-import { useRouter } from 'next/router';
-import { setCookie, parseCookies } from 'nookies';
-
 const darkTheme = keyframes`
   0% {
     opacity: 1;
@@ -63,8 +60,9 @@ const ThemeImg = styled.img`
 `;
 
 const ThemeImage = ({ currentTheme, changeTheme, setTheme, ...props }) => {
-  const cookies = parseCookies();
-  const [them, setThem] = useState(currentTheme || cookies.theme || 'light');
+  const [them, setThem] = useState(
+    currentTheme || localStorage.getItem('theme') || 'light',
+  );
   return (
     <ThemeImg
       onClick={() => {

@@ -85,13 +85,30 @@ const nextConfig = {
         },
       },
       {
+        urlPattern: /https:\/\/covid19.mathdro.id\/api\/countries$/,
+        handler: 'CacheFirst',
+        options: {
+          cacheName: 'cached-apis',
+          expiration: {
+            maxEntries: 2,
+            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 day
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+      {
         urlPattern: /https:\/\/covid19.mathdro.id\/api/,
         handler: 'StaleWhileRevalidate',
         options: {
           cacheName: 'cached-apis',
           expiration: {
-            maxEntries: 2,
+            maxEntries: 20,
             maxAgeSeconds: 1 * 24 * 60 * 60, // 1 day
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
           },
         },
       },

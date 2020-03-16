@@ -13,9 +13,8 @@ import theme from '../config/theme';
 import '../assets/css/index.css';
 
 class NextApp extends App {
-  cookies = parseCookies();
   state = {
-    theme: this.cookies.theme || 'light',
+    theme: typeof window === 'object' ? localStorage.getItem('theme') : 'light',
   };
   render() {
     const { Component, pageProps, store } = this.props;
@@ -119,14 +118,18 @@ class NextApp extends App {
           <meta name="msapplication-TileColor" content="#f56464" />
           <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
           <meta name="theme-color" content="#f56464" />
+          <meta
+            name="google-site-verification"
+            content="8GDg8Nd0EdnyjPIdBuyFp0uNvgw5L2wwHDw13n1bquU"
+          />
           <title>
             Covid-19 | Corona Virus | Latest Updates and Stats | Corona Virus
-            Stats of India
+            Stats of Any Country
           </title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta
             name="Description"
-            content="Covid-19 | Corona Virus | PWA | Corona Virus Cases in India"
+            content="Covid-19 | Corona Virus | PWA | Corona Virus Stats of Any Country"
           />
         </Head>
         <Provider store={store}>

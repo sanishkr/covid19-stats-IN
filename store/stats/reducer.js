@@ -64,7 +64,7 @@ const statsReducer = typeToReducer(
       FULFILLED: (state, action) => {
         return Object.assign({}, state, {
           countryData: {
-            ...state.data,
+            ...state.countryData,
             ...action.payload.data,
           },
           ui: { loading: false },
@@ -78,7 +78,7 @@ const statsReducer = typeToReducer(
       },
     },
     [actions.SET_THEME]: (state, action) => {
-      setCookie(null, 'theme', action.payload.theme);
+      localStorage.setItem('theme', action.payload.theme);
       return Object.assign({}, state, {
         theme: action.payload.theme,
         ui: { loading: false },
