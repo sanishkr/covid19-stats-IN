@@ -44,7 +44,7 @@ const statsReducer = typeToReducer(
       FULFILLED: (state, action) => {
         return Object.assign({}, state, {
           countries: {
-            ...state.data,
+            ...state.countries,
             ...action.payload.data,
           },
           ui: { loading: false },

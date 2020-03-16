@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-
 import styled from 'styled-components';
 import tw from 'tailwind.macro';
+import NoSSR from 'react-no-ssr';
+import dynamic from 'next/dynamic';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -15,6 +16,13 @@ import Header from '../components/Header';
 import StatsCard from '../components/StatsCard';
 import Footer from '../components/Footer';
 
+const Select = dynamic(import('react-styled-select'));
+const StyledSelect = styled(Select)`
+  & div {
+    background-color: ${props => props.theme.bg};
+    color: ${props => props.theme.text};
+  }
+`;
 const Container = styled.div`
   background-color: ${props => props.theme.bg};
   color: ${props => props.theme.text};
@@ -28,23 +36,34 @@ const LastUpdated = styled.span`
   ${tw`self-start m-2 ml-4 font-mono text-xs antialiased text-purple-600`};
 `;
 class Stats extends Component {
+  state = {
+    currentCountry:
+      typeof window === 'object' ? localStorage.getItem('country') : null,
+  };
   componentDidMount = async () => {
-    const params = { id: 'IN' };
+    const params = {
+      id: this.state.currentCountry || localStorage.getItem('country') || 'IN',
+    };
     await Promise.all([
       this.props.getStats(),
       this.props.getCountryStats(params),
-      // this.props.getStats()
     ]);
+    this.props.getCountries();
   };
   render() {
     const { stats, countries, countryStats, currentTheme } = this.props;
-    // console.log({
-    //   stats,
-    //   countries,
-    //   countryStats,
-    //   currentTheme,
-    //   props: this.props,
-    // });
+    console.log({
+      stats,
+      countries,
+      countryStats,
+      currentTheme,
+    });
+    const options = countries
+      ? Object.keys(countries).map((c, i) => ({
+          label: c,
+          value: countries[c],
+        }))
+      : [];
     return (
       <>
         {stats.lastUpdate && countryStats.lastUpdate ? (
@@ -65,9 +84,30 @@ class Stats extends Component {
                 <StatsCard type="deaths" count={stats.deaths.value} />
               </Wrapper>
               <div css={tw`flex flex-col w-full md:w-2/3`}>
-                <h2 css={tw`self-start ml-4 text-3xl text-red-500`}>
-                  Cases In India
-                </h2>
+                <div css={tw`self-start w-4/5 mt-4 ml-4 md:w-3/5`}>
+                  <NoSSR>
+                    <StyledSelect
+                      options={options}
+                      // onOpen={myOpenFunc}
+                      value={this.state.currentCountry || 'IN'}
+                      onChange={c => {
+                        this.setState({
+                          currentCountry: c,
+                        });
+                        localStorage.setItem('country', c);
+                        this.props.getCountryStats({
+                          id: c,
+                        });
+                      }}
+                      css={tw`bg-black`}
+                      classes={{
+                        selectValue: 'my-custom-value',
+                        selectArrow: 'my-custom-arrow',
+                        selectControl: 'bg-gray-900',
+                      }}
+                    />
+                  </NoSSR>
+                </div>
                 <LastUpdated>
                   Last updated:{' '}
                   {new Date(countryStats.lastUpdate).toUTCString()}
@@ -107,6 +147,7 @@ const mapDispatchToProps = dispatch =>
     {
       getStats: StatsActionsCreators.getStats,
       getCountryStats: StatsActionsCreators.getCountryStats,
+      getCountries: StatsActionsCreators.getCountries,
     },
     dispatch,
   );

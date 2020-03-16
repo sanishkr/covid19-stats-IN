@@ -7,7 +7,7 @@ const getTheme = store => {
 };
 
 const getCountries = store => {
-  return store.statsReducer.countries;
+  return store.statsReducer.countries.countries;
 };
 
 const getCountryStats = store => {

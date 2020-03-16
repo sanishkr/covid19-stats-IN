@@ -7,12 +7,12 @@ import config from '../../config';
 
 const getStats = () =>
   axios.get(`${config.api}/`).catch(() => ({
-    data: [],
+    data: {},
   }));
 
 const getCountries = () =>
   axios.get(`${config.api}/countries`).catch(() => ({
-    data: [],
+    data: {},
   }));
 
 const getCountryStats = ({ id }) =>
