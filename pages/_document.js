@@ -38,6 +38,7 @@ export default class MyDocument extends Document {
           <Main />
           <NextScript />
         </body>
+        <script src="/sw-push-listener.js"></script>
       </html>
     );
   }

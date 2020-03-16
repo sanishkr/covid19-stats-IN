@@ -121,7 +121,7 @@ class NextApp extends App {
           <meta name="theme-color" content="#f56464" />
           <title>
             Covid-19 | Corona Virus | Latest Updates and Stats | Corona Virus
-            Stats in India
+            Stats of India
           </title>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta

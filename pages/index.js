@@ -13,6 +13,7 @@ import {
 
 import Header from '../components/Header';
 import StatsCard from '../components/StatsCard';
+import Footer from '../components/Footer';
 
 const Container = styled.div`
   background-color: ${props => props.theme.bg};
@@ -30,8 +31,8 @@ class Stats extends Component {
   componentDidMount = async () => {
     const params = { id: 'IN' };
     await Promise.all([
-      this.props.getCountryStats(params),
       this.props.getStats(),
+      this.props.getCountryStats(params),
       // this.props.getStats()
     ]);
   };
@@ -83,6 +84,16 @@ class Stats extends Component {
                 />
                 <StatsCard type="deaths" count={countryStats.deaths.value} />
               </Wrapper>
+              <button
+                style={{
+                  display: 'none',
+                }}
+                css={tw`inline-block px-8 py-3 m-2 text-sm font-medium leading-none text-gray-900 bg-white border rounded`}
+                className="ad2hs-prompt"
+              >
+                Install App
+              </button>
+              <Footer />
             </Container>
           </>
         ) : null}
