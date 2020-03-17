@@ -16,7 +16,10 @@ import Header from '../components/Header';
 import StatsCard from '../components/StatsCard';
 import Footer from '../components/Footer';
 
-const Select = dynamic(import('react-styled-select'));
+const Select =
+  typeof window === 'object'
+    ? dynamic(import('react-styled-select'))
+    : styled.select;
 const StyledSelect = styled(Select)`
   & div {
     background-color: ${props => props.theme.bg};
@@ -52,12 +55,12 @@ class Stats extends Component {
   };
   render() {
     const { stats, countries, countryStats, currentTheme } = this.props;
-    console.log({
-      stats,
-      countries,
-      countryStats,
-      currentTheme,
-    });
+    // console.log({
+    //   stats,
+    //   countries,
+    //   countryStats,
+    //   currentTheme,
+    // });
     const options = countries
       ? Object.keys(countries).map((c, i) => ({
           label: c,
@@ -85,28 +88,30 @@ class Stats extends Component {
               </Wrapper>
               <div css={tw`flex flex-col w-full md:w-2/3`}>
                 <div css={tw`self-start w-4/5 mt-4 ml-4 md:w-3/5`}>
-                  <NoSSR>
-                    <StyledSelect
-                      options={options}
-                      // onOpen={myOpenFunc}
-                      value={this.state.currentCountry || 'IN'}
-                      onChange={c => {
-                        this.setState({
-                          currentCountry: c,
-                        });
-                        localStorage.setItem('country', c);
-                        this.props.getCountryStats({
-                          id: c,
-                        });
-                      }}
-                      css={tw`bg-black`}
-                      classes={{
-                        selectValue: 'my-custom-value',
-                        selectArrow: 'my-custom-arrow',
-                        selectControl: 'bg-gray-900',
-                      }}
-                    />
-                  </NoSSR>
+                  {options.length > 0 ? (
+                    <NoSSR>
+                      <StyledSelect
+                        options={options}
+                        // onOpen={myOpenFunc}
+                        value={this.state.currentCountry || 'IN'}
+                        onChange={c => {
+                          this.setState({
+                            currentCountry: c,
+                          });
+                          localStorage.setItem('country', c);
+                          this.props.getCountryStats({
+                            id: c,
+                          });
+                        }}
+                        css={tw`bg-black`}
+                        classes={{
+                          selectValue: 'my-custom-value',
+                          selectArrow: 'my-custom-arrow',
+                          selectControl: 'bg-gray-900',
+                        }}
+                      />
+                    </NoSSR>
+                  ) : null}
                 </div>
                 <LastUpdated>
                   Last updated:{' '}
