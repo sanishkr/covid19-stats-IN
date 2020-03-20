@@ -9,6 +9,7 @@ const initialState = {
     loading: false,
   },
   data: {},
+  dailySummary: [],
   countries: {},
   countryData: {},
   theme: cookies.theme,
@@ -27,6 +28,23 @@ const statsReducer = typeToReducer(
             ...state.data,
             ...action.payload.data,
           },
+          ui: { loading: false },
+        });
+      },
+      REJECTED: (state, action) => {
+        return Object.assign({}, state, {
+          error: action.payload.message,
+          ui: { loading: false },
+        });
+      },
+    },
+    [actions.GET_DAILY_SUMMARY]: {
+      PENDING: state => {
+        return Object.assign({}, state, { ui: { loading: true } });
+      },
+      FULFILLED: (state, action) => {
+        return Object.assign({}, state, {
+          dailySummary: action.payload.data,
           ui: { loading: false },
         });
       },

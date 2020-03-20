@@ -6,6 +6,7 @@ const actions = {
   GET_COUNTRY_STATS: 'GET_COUNTRY_STATS',
   GET_THEME: 'GET_THEME',
   SET_THEME: 'SET_THEME',
+  GET_DAILY_SUMMARY: 'GET_DAILY_SUMMARY',
 };
 
 const actionCreators = {
@@ -13,6 +14,12 @@ const actionCreators = {
     return {
       type: actions.GET_STATS,
       payload: apis.getStats(),
+    };
+  },
+  getDailySummary: params => {
+    return {
+      type: actions.GET_DAILY_SUMMARY,
+      payload: apis.getDailySummary(),
     };
   },
   getTheme: () => {

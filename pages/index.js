@@ -26,6 +26,9 @@ const StyledSelect = styled(Select)`
     color: ${props => props.theme.text};
   }
 `;
+
+const LineChart = dynamic(import('../components/LineChart.js'));
+
 const Container = styled.div`
   background-color: ${props => props.theme.bg};
   color: ${props => props.theme.text};
@@ -42,6 +45,7 @@ class Stats extends Component {
   state = {
     currentCountry:
       typeof window === 'object' ? localStorage.getItem('country') : null,
+    showChart: false,
   };
   componentDidMount = async () => {
     const params = {
@@ -74,18 +78,35 @@ class Stats extends Component {
             <Header changeTheme={this.props.changeTheme} />
             <Container>
               <div css={tw`flex flex-col w-full md:w-2/3`}>
-                <h2 css={tw`self-start ml-4 text-3xl text-red-500`}>
-                  Global Cases
-                </h2>
-                <LastUpdated>
-                  Last updated: {new Date(stats.lastUpdate).toUTCString()}
-                </LastUpdated>
+                <div className="flex flex-row items-center justify-between mx-4">
+                  <h2 css={tw`self-start text-3xl text-red-500`}>
+                    Global Cases
+                  </h2>
+                  <img
+                    className="w-8 h-8"
+                    src="/images/linechart.png"
+                    alt="line chart"
+                    onClick={() =>
+                      this.setState({ showChart: !this.state.showChart })
+                    }
+                  />
+                </div>
+                {this.state.showChart ? null : (
+                  <LastUpdated>
+                    Last updated: {new Date(stats.lastUpdate).toUTCString()}
+                  </LastUpdated>
+                )}
               </div>
-              <Wrapper>
-                <StatsCard type="confirmed" count={stats.confirmed.value} />
-                <StatsCard type="recovered" count={stats.recovered.value} />
-                <StatsCard type="deaths" count={stats.deaths.value} />
-              </Wrapper>
+              {this.state.showChart ? (
+                <LineChart />
+              ) : (
+                <Wrapper>
+                  <StatsCard type="confirmed" count={stats.confirmed.value} />
+                  <StatsCard type="recovered" count={stats.recovered.value} />
+                  <StatsCard type="deaths" count={stats.deaths.value} />
+                </Wrapper>
+              )}
+
               <div css={tw`flex flex-col w-full md:w-2/3`}>
                 <div css={tw`self-start w-4/5 mt-4 ml-4 md:w-3/5`}>
                   {options.length > 0 ? (

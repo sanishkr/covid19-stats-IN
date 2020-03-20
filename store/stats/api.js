@@ -10,6 +10,11 @@ const getStats = () =>
     data: {},
   }));
 
+const getDailySummary = () =>
+  axios.get(`${config.api}/daily`).catch(() => ({
+    data: [],
+  }));
+
 const getCountries = () =>
   axios.get(`${config.api}/countries`).catch(() => ({
     data: {},
@@ -20,4 +25,4 @@ const getCountryStats = ({ id }) =>
     data: {},
   }));
 
-export default { getStats, getCountries, getCountryStats };
+export default { getStats, getDailySummary, getCountries, getCountryStats };

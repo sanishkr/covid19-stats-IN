@@ -2,6 +2,10 @@ const getStats = store => {
   return store.statsReducer.data;
 };
 
+const getDailySummary = store => {
+  return store.statsReducer.dailySummary;
+};
+
 const getTheme = store => {
   return store.statsReducer.theme;
 };
@@ -14,4 +18,4 @@ const getCountryStats = store => {
   return store.statsReducer.countryData;
 };
 
-export { getStats, getTheme, getCountries, getCountryStats };
+export { getStats, getDailySummary, getTheme, getCountries, getCountryStats };
