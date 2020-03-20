@@ -78,12 +78,12 @@ class Stats extends Component {
             <Header changeTheme={this.props.changeTheme} />
             <Container>
               <div css={tw`flex flex-col w-full md:w-2/3`}>
-                <div className="flex flex-row items-center justify-between mx-4">
+                <div css={tw`flex flex-row items-center justify-between mx-4`}>
                   <h2 css={tw`self-start text-3xl text-red-500`}>
                     Global Cases
                   </h2>
                   <img
-                    className="w-8 h-8"
+                    css={tw`w-8 h-8`}
                     src="/images/linechart.png"
                     alt="line chart"
                     onClick={() =>
@@ -98,7 +98,9 @@ class Stats extends Component {
                 )}
               </div>
               {this.state.showChart ? (
-                <LineChart />
+                <div css={tw`w-full mx-auto my-4 md:w-2/3`}>
+                  <LineChart />
+                </div>
               ) : (
                 <Wrapper>
                   <StatsCard type="confirmed" count={stats.confirmed.value} />
