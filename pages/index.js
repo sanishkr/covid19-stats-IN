@@ -28,24 +28,32 @@ const StyledSelect = styled(Select)`
 `;
 
 const LineChart = dynamic(import('../components/LineChart.js'));
+const Country = dynamic(import('./country'));
 
 const Container = styled.div`
   background-color: ${props => props.theme.bg};
   color: ${props => props.theme.text};
   ${tw`flex flex-col items-center justify-start w-full min-h-screen pt-4 font-sans`};
 `;
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   ${tw`flex flex-row flex-wrap items-center justify-center w-full pb-4 border-b border-gray-300 border-dotted md:w-2/3`};
 `;
 
 const LastUpdated = styled.span`
   ${tw`self-start m-2 ml-4 font-mono text-xs antialiased text-purple-600`};
 `;
+
+const MoreDetails = styled.button`
+  ${tw`p-2 my-4 border rounded`};
+  background-color: ${props => props.theme.cardBg};
+`;
+
 class Stats extends Component {
   state = {
     currentCountry:
       typeof window === 'object' ? localStorage.getItem('country') : null,
     showChart: false,
+    showCountryModal: false,
   };
   componentDidMount = async () => {
     const params = {
@@ -75,6 +83,12 @@ class Stats extends Component {
       <>
         {stats.lastUpdate && countryStats.lastUpdate ? (
           <>
+            {this.state.showCountryModal ? (
+              <Country
+                visible={this.state.showCountryModal}
+                cb={() => this.setState({ showCountryModal: false })}
+              />
+            ) : null}
             <Header changeTheme={this.props.changeTheme} />
             <Container>
               <div css={tw`flex flex-col w-full md:w-2/3`}>
@@ -151,6 +165,18 @@ class Stats extends Component {
                   count={countryStats.recovered.value}
                 />
                 <StatsCard type="deaths" count={countryStats.deaths.value} />
+
+                {this.state.currentCountry === 'IN' ? (
+                  <MoreDetails
+                    onClick={() => {
+                      this.setState({
+                        showCountryModal: true,
+                      });
+                    }}
+                  >
+                    Get More Latest Details of India
+                  </MoreDetails>
+                ) : null}
               </Wrapper>
               <button
                 style={{
