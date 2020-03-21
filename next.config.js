@@ -113,6 +113,20 @@ const nextConfig = {
         },
       },
       {
+        urlPattern: /https:\/\/api.rootnet.in\/covid19-in/,
+        handler: 'StaleWhileRevalidate',
+        options: {
+          cacheName: 'cached-apis',
+          expiration: {
+            maxEntries: 20,
+            maxAgeSeconds: 1 * 24 * 60 * 60, // 1 day
+          },
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      },
+      {
         urlPattern: /\//,
         handler: 'NetworkFirst',
         options: {
