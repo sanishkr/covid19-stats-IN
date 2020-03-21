@@ -51,7 +51,9 @@ const MoreDetails = styled.button`
 class Stats extends Component {
   state = {
     currentCountry:
-      typeof window === 'object' ? localStorage.getItem('country') : null,
+      typeof window === 'object'
+        ? localStorage.getItem('country') || 'IN'
+        : 'IN',
     showChart: false,
     showCountryModal: false,
   };
