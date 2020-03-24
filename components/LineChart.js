@@ -22,11 +22,15 @@ const LineChart = ({ dailySummary, currentTheme, ...props }) => {
     const deaths = [];
     // console.log({ dailySummary });
 
+    let prevDayCases =
+      dailySummary.length > 0 ? dailySummary[0].totalConfirmed : 0;
     dailySummary.forEach(smry => {
       cases.push(smry.totalConfirmed);
-      newcases.push(smry.deltaConfirmed);
+      newcases.push(smry.totalConfirmed - prevDayCases);
+      // newcases.push(smry.deltaConfirmed);
       deaths.push(smry.deaths.total);
       labels.push(smry.reportDate.replace('2020-', ''));
+      prevDayCases = smry.totalConfirmed;
     });
     setData({
       labels,

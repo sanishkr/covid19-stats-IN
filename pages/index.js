@@ -99,7 +99,7 @@ class Stats extends Component {
                     Global Cases
                   </h2>
                   <img
-                    css={tw`w-8 h-8`}
+                    css={tw`w-8 h-8 cursor-pointer`}
                     src="/images/linechart.png"
                     alt="line chart"
                     onClick={() =>

@@ -47,7 +47,7 @@ const StyledSelect = styled(Select)`
 const StyledDiv = styled.div`
   background-color: ${props => props.theme.bg};
   color: ${props => props.theme.text};
-  ${tw`fixed z-30 flex flex-col items-center justify-start visible w-full h-full min-h-screen pt-4 overflow-scroll font-sans`};
+  ${tw`fixed z-30 flex flex-col items-center justify-start visible w-full h-full min-h-screen pt-4 overflow-y-scroll font-sans`};
   ${props =>
     props.visible
       ? css`
@@ -113,7 +113,7 @@ const Country = ({
             's APIs
           </span>
         </div>
-        <i className="h-12 text-2xl not-italic" onClick={cb}>
+        <i className="h-12 text-2xl not-italic cursor-pointer" onClick={cb}>
           &#10005;
         </i>
       </div>
@@ -122,7 +122,7 @@ const Country = ({
         <div css={tw`flex flex-row items-center justify-between mx-4`}>
           <h2 css={tw`self-start text-3xl text-red-500`}>India - Summary</h2>
           <img
-            css={tw`w-8 h-8`}
+            css={tw`w-8 h-8 cursor-pointer`}
             src="/images/linechart.png"
             alt="line chart"
             onClick={() => setShowChart(!showChart)}
