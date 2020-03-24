@@ -76,9 +76,9 @@ class Stats extends Component {
     //   currentTheme,
     // });
     const options = countries
-      ? Object.keys(countries).map((c, i) => ({
-          label: c,
-          value: countries[c],
+      ? countries.map((c, i) => ({
+          label: c.name,
+          value: c.iso2,
         }))
       : [];
     return (

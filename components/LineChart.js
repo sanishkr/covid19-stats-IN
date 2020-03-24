@@ -19,12 +19,14 @@ const LineChart = ({ dailySummary, currentTheme, ...props }) => {
     const cases = [];
     const labels = [];
     const newcases = [];
+    const deaths = [];
     // console.log({ dailySummary });
 
     dailySummary.forEach(smry => {
       cases.push(smry.totalConfirmed);
       newcases.push(smry.deltaConfirmed);
-      labels.push(smry.reportDateString.replace('2020/', ''));
+      deaths.push(smry.deaths.total);
+      labels.push(smry.reportDate.replace('2020-', ''));
     });
     setData({
       labels,
@@ -46,6 +48,15 @@ const LineChart = ({ dailySummary, currentTheme, ...props }) => {
           borderColor: 'rgb(237, 137, 54)',
           backgroundColor: 'rgb(237, 137, 54)',
           data: newcases,
+        },
+        {
+          label: '# of total deaths',
+          fill: false,
+          pointBorderColor: '#f56565',
+          pointHoverRadius: 5,
+          borderColor: '#f56565',
+          backgroundColor: '#f56565',
+          data: deaths,
         },
       ],
     });
