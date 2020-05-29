@@ -45,9 +45,9 @@ const StyledSelect = styled(Select)`
 `;
 
 const StyledDiv = styled.div`
+  ${tw`fixed z-30 flex flex-col items-center justify-start visible w-full h-full min-h-screen pt-4 overflow-y-scroll font-sans bg-gray-100`};
   background-color: ${props => props.theme.bg};
   color: ${props => props.theme.text};
-  ${tw`fixed z-30 flex flex-col items-center justify-start visible w-full h-full min-h-screen pt-4 overflow-y-scroll font-sans`};
   ${props =>
     props.visible
       ? css`
